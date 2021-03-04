@@ -22,7 +22,7 @@ int non_space_char(char c){
    str does not contain any words. */
 char *word_start(char *str){
   while(space_char(*str)){ // looks for the first letter of the word in str
-    str++; 
+    str++; // moves on to the next str char
   }
   return str;
 }
@@ -30,7 +30,7 @@ char *word_start(char *str){
 /* Returns a pointer terminator char following *word */
 char *word_terminator(char *word){
   while(non_space_char(*word)){ // looks for the space or \0 in word
-   word++;
+    word++; // moves on to the next word char
   }
   return word;
 }
@@ -43,7 +43,7 @@ int  count_words(char *str){
   while (*pstr){
     pstr = word_start(pstr); // points to the first word in char
     pstr = word_terminator(pstr); // and checks if its null
-    wcount++;
+    wcount++; // increments count of words
   }
   return wcount;
 }
@@ -52,10 +52,10 @@ int  count_words(char *str){
    containing <len> chars from <inStr> */
 char *copy_str(char *inStr, short len){
   char *cpstr = (char *)malloc((len+1) * (sizeof(char))); // creates the space for the copy of instr
-  for(int i = 0; i < len; i++){
-    cpstr[i] = inStr[i];
+  for(int i = 0; i < len; i++){ 
+    cpstr[i] = inStr[i]; // assigning the instr to the cpstr
   }
-  cpstr[len] = '\0';
+  cpstr[len] = '\0'; //set the last to the terminator
   return cpstr;
 }
 
@@ -69,37 +69,33 @@ char *copy_str(char *inStr, short len){
      tokens[3] = 0
 */
 char **tokenize(char* str){
-  int wc = count_words(str);
-  char **strtoken = (char **)malloc((wc+1) * sizeof(char *));
+  int wc = count_words(str); // get the number of words in the string using count word method
+  char **strtoken = (char **)malloc((wc+1) * sizeof(char *)); // alloactes the memeory for the string
   
-  for(int i = 0; i < wc; i++){
-    str = word_start(str);
-    int L = word_terminator(str) - word_start(str);
-    strtoken[i] = copy_str(str, L);
-    printf("just tokenized word %s \n", strtoken[i]);
+  for(int i = 0; i < wc; i++){ 
+    str = word_start(str); 
+    int L = word_terminator(str) - word_start(str); // gets the length of string
+    strtoken[i] = copy_str(str, L); // copies word to that one token
     str = word_start(word_terminator(str));
   }
-  strtoken[wc] = 0;
-  printf("tokenized 0 %d \n", strtoken[wc]);
-  return strtoken;
+  strtoken[wc] = 0; //sets the last token to 0
+  return strtoken; 
 }
 
 /* Prints all tokens. */
 void print_tokens(char **tokens){
-  while(*tokens != 0){
-  printf("token: %s \n", *tokens);
-  tokens++;
+  while(*tokens != 0){ // goes through the whole string till the end of the string
+    printf("token: %s \n", *tokens); // prints the tokens
+    tokens++; // moves to the next token
   }
 }
 
 /* Frees all tokens and the vector containing themx. */
 void free_tokens(char **tokens){
-  //char **temp = tokens; 
-  //int i = 0;
-  while(*tokens != 0){
-    free(*tokens);
-    // printf("free %s \n",*tokens);
-    tokens++;
+  char **temp = tokens; // temp to hold tokens
+  while(*tokens != 0){ // goes thorugh the whole string till the end of the string
+    free(*tokens); // would free m y \0
+    tokens++; // moves to the next token
   }
-  free(tokens);
+  free(temp); // frees the string
 } 
