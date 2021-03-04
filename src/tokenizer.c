@@ -76,9 +76,11 @@ char **tokenize(char* str){
     str = word_start(str);
     int L = word_terminator(str) - word_start(str);
     strtoken[i] = copy_str(str, L);
+    printf("just tokenized word %s \n", strtoken[i]);
     str = word_start(word_terminator(str));
   }
   strtoken[wc] = 0;
+  printf("tokenized 0 %d \n", strtoken[wc]);
   return strtoken;
 }
 
@@ -92,12 +94,12 @@ void print_tokens(char **tokens){
 
 /* Frees all tokens and the vector containing themx. */
 void free_tokens(char **tokens){
-  char **temp = tokens; 
-  int i = 0;
-  while(*tokens+i){
-    free(*(tokens+i));
+  //char **temp = tokens; 
+  //int i = 0;
+  while(*tokens != 0){
+    free(*tokens);
     // printf("free %s \n",*tokens);
-    i++;
+    tokens++;
   }
-  free(temp);
+  free(tokens);
 } 
