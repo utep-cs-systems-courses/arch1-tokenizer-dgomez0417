@@ -25,8 +25,8 @@ int main()
   printf("should be get history \n");
   printf("%s \n", get_history(list, 1));
 
-  //printf("should be print histroy \n");
-  // print_history(list);
-  
+  printf("should be print histroy \n");
+  print_history(list);
+  free_history(list);
 }
 
