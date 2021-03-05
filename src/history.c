@@ -13,22 +13,22 @@ List* init_history(){
    char* str - the string to store
 */
 void add_history(List *list, char *str){
-  Item *newnode = malloc(sizeof(Item));
-  if(list->root == NULL){
-    newnode->id = 1;
-    newnode->str = str;
-    list->root = newnode;
+  Item *newnode = malloc(sizeof(Item)); // create a new node
+  if(list->root == NULL){ // if the list is empty
+    newnode->id = 1; // then it gives the newnode number 1
+    newnode->str = str; // enters the string
+    list->root = newnode; // and points to null
   }
-  else{
-    int countId = 2;
+  else{ // the list is not empty
+    int countId = 2; // starts the count at 2
     Item *temp = list->root;
-    while(temp->next != NULL){
-      temp = temp->next;
-      countId++;
+    while(temp->next != NULL){ // traverse the list
+      temp = temp->next; // moves on to the next node
+      countId++; // increments on count id
     }
-    newnode->id = countId;
-    newnode->str = str;
-    temp->next = newnode;
+    newnode->id = countId; // the new node get the current count
+    newnode->str = str; // and the string
+    temp->next = newnode; // and points to null
   }   
 }
 
@@ -38,32 +38,33 @@ void add_history(List *list, char *str){
 char *get_history(List *list, int id){
   Item *temp = list->root;
   char *str;
-
-  while(temp != NULL){
-    if(temp->id == id){
-      str = temp->str;
-      return str;
-    }
-    temp = temp->next;
+  
+  // printf("Entering while loop");
+  while(temp != NULL){ // Traverse till the end of the list
+    if(temp->id == id){ // if the id in the node equals the node requested
+      str = temp->str; // then it places that string in str
+      // printf("%s \n", str);
+      return str; // and returns it
+    } 
+    temp = temp->next;// moves on to the next node
   }
-  return 0;
+  return 0; // return null if not found
 }
 
 /*Print the entire contents of the list. */
 void print_history(List *list){
   Item * temp = list->root;
-  while(temp->next != NULL){
-    printf("%d. %s \n", temp->id, temp->str);
-    temp = temp->next;
+  while(temp != NULL){ // traverse till the end of the list
+    printf("%d. %s \n", temp->id, temp->str); // prints the id and str inside the node
+    temp = temp->next; // moves one to the next node
   }
 }
   
 /*Free the history list and the strings it references. */
 void free_history(List *list){
   Item * temp = list->root;
-  while(temp->next != NULL){
-    free(temp->str);
-    temp = temp->next;
+  while(temp != NULL){ // traverse till the end of the list
+    free(temp); // free node
+    temp = temp->next; // moves one to the next node
   }
-  free(list);
 }
